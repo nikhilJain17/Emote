@@ -1,0 +1,19 @@
+{
+  "name": "Friendl",
+  "version": "1.0.0",
+  "description": "Teach emotion to autistic children",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/nikhilJain17/Emotl",
+  "keywords": [
+    "Electron",
+    "emotion"
+  ],
+  "author": "Nikhil and Vinija Jain",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "~1.6.2"
+  }
+}
