@@ -19,7 +19,10 @@
 
     <!-- menu to choose which mode to use -->
     <div class='menu'>
-      <button class='btn' id='learn' style="position: absolute; top:300px; left: 300px"><h3>Learn</h3></button>
+      <button class='btn' id='screenshot' style="position: absolute; top:300px; left: 300px"><h3>Screenshot</h3></button>
+
+      <button class='btn' id='analyze' style="position: absolute; top:400px; left: 300px"><h3>Analyze</h3></button>
+
     </div>
 
   </div>
@@ -29,5 +32,64 @@
   <script>
     // You can also require other files to run in this process
     require('./renderer.js')
+    const { exec } = require('child_process')
+    const Clarifai = require('clarifai');
+    var base64 = require('file-base64');
+    
+    // var fs = require('fs'),
+    //   path = require('path'),    
+    //   filePath = path.join(__dirname, 'screenshot.jpg');
+
+    var app = new Clarifai.App(
+      'TF7v5899nEaDy_zfnUOaMnIJIilQJM_AQsntjIvq',
+      'NwM1LvqJ9i4fki2j3LhSR8TpPlDXUJffYxOszy8v'
+    );
+
+    // const ipc = require('ipc')
+    
+    var grabBtn = document.getElementById('screenshot')
+    grabBtn.addEventListener('click', function() {
+
+      console.log('screengrab btn clicked')
+
+      exec('screencapture -i screenshot.jpg')
+      // ipc.send('screengrab')
+    })
+
+
+    var analyzeBtn = document.getElementById('analyze')
+    analyzeBtn.addEventListener('click', function() {
+
+      // @TODO
+      // turn img file into base 64
+      // send it to Clarifai (done)
+
+      base64.encode('screenshot.jpg', function(err, base64String) {
+        
+        console.log(base64String);
+
+        app.models.predict("emotion", {base64: base64String}).then(
+          
+          function(response) { 
+            console.log(JSON.stringify(response))
+          },
+          
+          function(err) {
+            // there was an error
+            console.log(err)
+          }
+        );
+
+      });
+
+
+
+
+
+
+
+    })
+
+
   </script>
 </html>
